@@ -34,16 +34,20 @@ class GameMain():
 
 	#Reset the game-board contents and the current states, ready for new game
 	def newGame(self):
-		self.board.newGame() 			#clear the board contents
+		self.board.newGame() 			#clear the board contents		
+		print("Who starts?\n 1. Player\t2. PC")    		
+		self.initPlayer = int(input("Choose a number > "))
 		self.currentPlayer = Seed.CROSS 		# CROSS plays first
 		self.currentState = State.PLAYING 	# ready to play
 		self.turno = 1
+		
 
 	
 	#The currentPlayer makes one move. Update cells[][] and currentState.	
 	def stepGame(self):
 		#turno del usuario		
-		if self.currentPlayer == Seed.CROSS:
+		if ((self.currentPlayer == Seed.CROSS and self.initPlayer == 1)
+			or (self.currentPlayer == Seed.NOUGHT and self.initPlayer == 2)):
 			validInput = False # for validating input
 			while True:								
 				print("Player {0}, enter your move (row[1-3] column[1-3]): ".format(self.currentPlayer))
