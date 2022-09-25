@@ -132,6 +132,13 @@ class GameMain():
 			cell[1] = 2
 			return cell
 		else:
+			#Trampa de flecha
+			if (self.board.cells[1][1].content == Seed.CROSS 
+				and self.board.cells[2][2].content == Seed.CROSS
+				and self.board.cells[0][2].content == Seed.NO_SEED):
+				cell[0] = 0
+				cell[1] = 2
+				return cell
 			#buscar celda que no es esquina y este vacia
 			if self.board.cells[0][1].content == Seed.NO_SEED:
 				cell[0] = 0
