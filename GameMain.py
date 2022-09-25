@@ -58,7 +58,7 @@ class GameMain():
 					self.currentState = self.board.stepGame(self.currentPlayer, row, col)
 					validInput = True # input okay, exit loop
 				else:
-					print("This move at ({} {}) is not valid. Try again...".format(row + 1,col+1))				
+					print("This move at ({},{}) is not valid. Try again...".format(row + 1,col+1))				
 				if validInput == True: # repeat until input is valid
 					break
 		else:  # Turnos pares (computadora)
@@ -77,10 +77,14 @@ class GameMain():
 				else:
 					self.currentState = self.board.stepGame(self.currentPlayer, 0, 2) # go(3)			
 			elif self.turno == 4:
-				cell = [0,0]				
+				cell = [0,0]
+				# bloquear oponente				
 				if self.possWin(Seed.CROSS) != None:
-					cell = self.possWin(Seed.CROSS)  # bloquear oponente
-				elif self.board.cells[2][1].content == Seed.CROSS:
+					cell = self.possWin(Seed.CROSS)
+				#Evitar Trampa 3 en esquina  
+				elif self.evitarTrampa3esquinas()!= None:
+					cell = self.evitarTrampa3esquinas()
+				elif self.board.cells[2][1].content == Seed.CROSS: # Evitar trampas L
 					if self.board.cells[0][0].content == Seed.CROSS:
 						cell[0] = 2
 						cell[1] = 0
@@ -247,6 +251,30 @@ class GameMain():
 					cell[0] = row
 					cell[1] = col
 		return cell
+
+	def evitarTrampa3esquinas(self):
+		cell = [-1,-1]
+		if (self.board.cells[0][1].content == Seed.CROSS and 
+			(self.board.cells[1][0].content == Seed.CROSS
+			or self.board.cells[1][2].content == Seed.CROSS)): 
+				if self.board.cells[1][0].content == Seed.CROSS:
+					cell[0] = 0
+					cell[1] = 0
+				else:
+					cell[0] = 0
+					cell[1] = 2 
+				return cell
+		elif (self.board.cells[2][1].content == Seed.CROSS and 
+				(self.board.cells[1][0].content == Seed.CROSS
+				or self.board.cells[1][2].content == Seed.CROSS)): 
+					if self.board.cells[1][0].content == Seed.CROSS:
+						cell[0] = 2
+						cell[1] = 0
+					else:
+						cell[0] = 2
+						cell[1] = 2 
+					return cell
+		return None
 
 
 GameMain() # Let the constructor do the job	
