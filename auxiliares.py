@@ -16,3 +16,9 @@ class State(Enum):
     CROSS_WON = 3
     NOUGHT_WON = 4
 
+def validarNumero(min, max, mensaje):
+    while True:
+        valor = int(input(mensaje)) - 1
+        if min <= valor <= max:
+            return valor
+

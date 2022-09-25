@@ -51,10 +51,9 @@ class GameMain():
 			validInput = False # for validating input
 			while True:								
 				print("Player {0}, enter your move (row[1-3] column[1-3]): ".format(self.currentPlayer))
-				row = int(input("row:")) - 1 # [0-2]
-				col = int(input("col:")) - 1
-				if (row >= 0 and row < self.board.ROWS and col >= 0 and col < self.board.COLS
-						and self.board.cells[row][col].content == Seed.NO_SEED):
+				row = validarNumero(0,self.board.ROWS,"row:")
+				col = validarNumero(0,self.board.COLS,"col:")
+				if (self.board.cells[row][col].content == Seed.NO_SEED):
 					#Update cells[][] and return the new game state after the move
 					self.currentState = self.board.stepGame(self.currentPlayer, row, col)
 					validInput = True # input okay, exit loop
