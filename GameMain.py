@@ -76,9 +76,19 @@ class GameMain():
 					self.currentState = self.board.stepGame(self.currentPlayer, 2, 2) #go(9)
 				else:
 					self.currentState = self.board.stepGame(self.currentPlayer, 0, 2) # go(3)			
-			elif self.turno == 4:				
+			elif self.turno == 4:
+				cell = [0,0]				
 				if self.possWin(Seed.CROSS) != None:
 					cell = self.possWin(Seed.CROSS)  # bloquear oponente
+				elif self.board.cells[2][1].content == Seed.CROSS:
+					if self.board.cells[0][0].content == Seed.CROSS:
+						cell[0] = 2
+						cell[1] = 0
+					elif self.board.cells[0][2].content == Seed.CROSS:						
+						cell[0] = 2
+						cell[1] = 2
+					else:
+						cell = self.make2()
 				else:
 					cell = self.make2()
 				self.currentState = self.board.stepGame(self.currentPlayer, cell[0], cell[1])				
@@ -134,7 +144,8 @@ class GameMain():
 			#Trampa de flecha
 			if (self.board.cells[1][1].content == Seed.CROSS 
 				and self.board.cells[2][2].content == Seed.CROSS
-				and self.board.cells[0][2].content == Seed.NO_SEED):
+				and self.board.cells[0][2].content == Seed.NO_SEED
+				and self.initPlayer == 1):
 				cell[0] = 0
 				cell[1] = 2
 				return cell
